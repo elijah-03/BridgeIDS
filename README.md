@@ -61,6 +61,8 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
 -   `load_dataset.py`: Utility to load and sample the CSE-CIC-IDS2018 dataset.
 -   `static/`: CSS styles and JavaScript logic for the frontend.
 -   `templates/`: HTML templates for the web interface.
+-   `dataset-notes`: Notes on the dataset source and characteristics.
+-   `Improved_CSE-CIC-IDS_2018_Documentation`: Documentation for the improved dataset.
 -   `*.joblib`: Serialized model and preprocessing artifacts.
 
 ## Dataset
