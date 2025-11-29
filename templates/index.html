@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDS Control Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>IDS Control Panel</h1>
+            <p>Interactive Traffic Analysis & Interpretation</p>
+        </header>
+
+
+        <section class="controls-panel">
+
+            <!-- Identity -->
+            <div class="control-group">
+                <h3>Identity</h3>
+                <div class="input-wrapper">
+                    <label for="Dst Port"
+                        title="Destination port - service endpoint being accessed (e.g., 80=HTTP, 443=HTTPS)">Dst
+                        Port (Service)</label>
+                    <input type="number" id="Dst Port" min="0" max="65535" value="80">
+                    <span class="helper-text" id="port-helper">HTTP (Web)</span>
+                </div>
+                <div class="input-wrapper">
+                    <label for="Protocol" title="Network protocol used (TCP=6, UDP=17, ICMP=1)">Protocol</label>
+                    <select id="Protocol">
+                        <option value="6">TCP (6)</option>
+                        <option value="17">UDP (17)</option>
+                        <option value="1">ICMP (1)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Time -->
+            <div class="control-group">
+                <h3>Time</h3>
+                <div class="input-wrapper">
+                    <label for="Hour" title="Time of day when traffic occurred (0=midnight, 12=noon)">Hour of Day
+                        (0-23)</label>
+                    <input type="range" id="Hour" min="0" max="23" step="1" value="12">
+                    <input type="number" class="value-input" id="val-Hour" min="0" max="23" value="12">
+                </div>
+            </div>
+
+            <!-- Volume -->
+            <div class="control-group">
+                <h3>Volume</h3>
+                <div class="input-wrapper">
+                    <label for="Total Fwd Packets" title="Number of packets sent from source to destination">Total
+                        Fwd Packets</label>
+                    <input type="range" id="Total Fwd Packets" min="0" max="200000" step="1" value="10">
+                    <input type="number" class="value-input" id="val-Total Fwd Packets" min="0" max="200000" value="10">
+                </div>
+                <div class="input-wrapper">
+                    <label for="Fwd Packets Length Total"
+                        title="Total bytes in forward direction (logarithmic scale)">Total Fwd Bytes</label>
+                    <input type="range" id="Fwd Packets Length Total" min="0" max="100" step="0.1" value="50"
+                        data-log-scale="true">
+                    <input type="number" class="value-input" id="val-Fwd Packets Length Total" min="1" max="10000000"
+                        step="1" value="1000">
+                </div>
+            </div>
+
+            <!-- Dynamics -->
+            <div class="control-group">
+                <h3>Dynamics</h3>
+                <div class="input-wrapper">
+                    <label for="Flow Duration"
+                        title="Total time the connection was active in microseconds (logarithmic scale)">Flow
+                        Duration (µs)</label>
+                    <input type="range" id="Flow Duration" min="0" max="100" step="0.1" value="50"
+                        data-log-scale="true">
+                    <input type="number" class="value-input" id="val-Flow Duration" min="1" max="120000000" step="0.01"
+                        value="1000000">
+                </div>
+                <div class="input-wrapper">
+                    <label for="Flow IAT Mean"
+                        title="Average time between packets in microseconds (logarithmic scale)">Flow IAT Mean
+                        (µs)</label>
+                    <input type="range" id="Flow IAT Mean" min="0" max="100" step="0.1" value="50"
+                        data-log-scale="true">
+                    <input type="number" class="value-input" id="val-Flow IAT Mean" min="1" max="10000000" step="0.01"
+                        value="100000">
+                </div>
+            </div>
+
+            <!-- Packet Size -->
+            <div class="control-group">
+                <h3>Packet Size</h3>
+                <div class="input-wrapper">
+                    <label for="Fwd Packet Length Max" title="Maximum size of forwarded packets in bytes">Max Fwd
+                        Packet Size</label>
+                    <input type="range" id="Fwd Packet Length Max" min="0" max="5000" step="0.01" value="64">
+                    <input type="number" class="value-input" id="val-Fwd Packet Length Max" min="0" max="5000"
+                        step="0.01" value="64">
+                </div>
+            </div>
+
+            <!-- Behavior -->
+            <div class="control-group">
+                <h3>Behavior (Flags)</h3>
+                <div class="flags-grid">
+                    <div class="flag-item">
+                        <label for="SYN Flag Count" title="Number of SYN (connection initiation) flags">SYN</label>
+                        <input type="number" id="SYN Flag Count" min="0" max="1" value="0">
+                    </div>
+                    <div class="flag-item">
+                        <label for="RST Flag Count" title="Number of RST (connection reset) flags">RST</label>
+                        <input type="number" id="RST Flag Count" min="0" max="1" value="0">
+                    </div>
+                    <div class="flag-item">
+                        <label for="FIN Flag Count" title="Number of FIN (connection termination) flags">FIN</label>
+                        <input type="number" id="FIN Flag Count" min="0" max="1" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical -->
+            <div class="control-group">
+                <h3>Technical</h3>
+                <div class="input-wrapper">
+                    <label for="Init Fwd Win Bytes" title="Initial TCP window size in bytes (flow control)">Init Fwd
+                        Win Bytes</label>
+                    <input type="range" id="Init Fwd Win Bytes" min="0" max="65535" step="1" value="8192">
+                    <input type="number" class="value-input" id="val-Init Fwd Win Bytes" min="0" max="65535"
+                        value="8192">
+                </div>
+            </div>
+
+    </div>
+
+    <!-- Button removed as auto-prediction is enabled -->
+    </section>
+
+    <section class="visualization">
+        <h2>Prediction</h2>
+
+        <div class="prediction-presets-grid">
+            <div class="prediction-card">
+                <div class="prediction-result">
+                    <span id="prediction-text" class="prediction-value">Waiting for analysis...</span>
+                    <span id="confidence-badge" class="confidence-badge"></span>
+                </div>
+                <div class="metadata">
+                    <span id="timestamp-display"></span>
+                </div>
+            </div>
+
+            <div class="presets-card">
+                <h3>Quick Presets</h3>
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-type="Benign">Benign</button>
+                    <button class="preset-btn" data-type="DoS">DoS</button>
+                    <button class="preset-btn" data-type="DDoS">DDoS</button>
+                    <button class="preset-btn" data-type="Brute Force">Brute Force</button>
+                    <button class="preset-btn" data-type="Web Attack">Web Attack</button>
+                    <button class="preset-btn" data-type="Bot/Infiltration">Bot/Infiltration</button>
+                </div>
+            </div>
+        </div>
+        <div id="probability-bars" class="probability-bars"></div>
+        <div class="chart-container">
+            <canvas id="predictionChart"></canvas>
+        </div>
+        <div id="sensitivity-box" class="sensitivity-box" style="display:none;">
+            <h3>Sensitivity Analysis</h3>
+            <p id="sensitivity-text"></p>
+        </div>
+        <div id="insight-box" class="insight-box">
+            <h3>Insight</h3>
+            <p id="insight-text">Adjust features to see how the model reacts.</p>
+        </div>
+    </section>
+    </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

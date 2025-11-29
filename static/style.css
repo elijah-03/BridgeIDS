@@ -1,0 +1,468 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --danger-color: #f43f5e;
+    --success-color: #10b981;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background-image: radial-gradient(circle at top right, #1e293b 0%, transparent 40%),
+        radial-gradient(circle at bottom left, #0f172a 0%, transparent 40%);
+    overflow-y: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    /* Center the container */
+    display: grid;
+    /* grid-template-columns: 1fr 350px; */
+    grid-template-columns: 100%;
+    /* Stack vertically */
+    grid-template-rows: auto auto 1fr;
+    /* Header, Visualization, Controls */
+    gap: 0.5rem;
+    min-height: 95vh;
+    align-items: start;
+}
+
+.container>* {
+    min-width: 0;
+    /* Prevent grid blowout */
+}
+
+header {
+    grid-column: 1 / -1;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Controls Section */
+.controls-panel {
+    /* order: 2; Removed to respect HTML order (Visualization first? No, HTML has Controls first) */
+    /* Wait, HTML has Controls first. If we want Visualization on top, we need order. */
+    order: 2;
+    /* Keep Controls below Visualization */
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: var(--glass-border);
+    border-radius: 16px;
+    padding: 0.75rem;
+    /* Reduced padding */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    /* Reduced gap */
+    align-content: start;
+    width: 100%;
+    /* Enforce full width */
+}
+
+.controls-panel h3 {
+    grid-column: 1 / -1;
+    font-size: 0.95rem;
+    /* Slightly smaller */
+    margin-bottom: 0.25rem;
+    /* Reduced margin */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.25rem;
+    margin-top: 0.25rem;
+    /* Reduced margin */
+}
+
+.control-group {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    /* Reduced gap */
+}
+
+.control-group h3 {
+    grid-column: 1 / -1;
+    margin-top: 0;
+}
+
+.input-wrapper {
+    margin-bottom: 0.25rem;
+    /* Reduced margin */
+}
+
+.input-group label {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.input-group input[type="number"],
+.input-group input[type="range"] {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.input-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.value-input {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    text-align: right;
+    font-family: inherit;
+}
+
+.value-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: rgba(15, 23, 42, 0.5);
+}
+
+/* Flags Group */
+.flags-group {
+    margin-bottom: 1.5rem;
+    background: rgba(15, 23, 42, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.flags-group h3 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    margin-right: 0.75rem;
+    accent-color: var(--accent-color);
+    width: 16px;
+    height: 16px;
+}
+
+.checkbox-wrapper label {
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Presets Group */
+.presets-group {
+    margin-bottom: 1.5rem;
+    background: rgba(15, 23, 42, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.presets-group h3 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
+}
+
+.preset-btn {
+    padding: 0.5rem;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+button#predict-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+}
+
+button#predict-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+button#predict-btn:active {
+    transform: translateY(0);
+}
+
+/* Visualization Section */
+.visualization {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: var(--glass-border);
+    border-radius: 16px;
+    padding: 1rem;
+    /* Reduced padding */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* Enforce full width */
+}
+
+.visualization h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Two-column grid for prediction and presets */
+.prediction-presets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Side-by-side */
+    gap: 0.75rem;
+    /* Reduced gap */
+    margin-bottom: 0.75rem;
+    /* Reduced margin */
+}
+
+.prediction-card,
+.presets-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.presets-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.presets-card .preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.prediction-result {
+    padding: 1rem;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.prediction-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+/* Color coding for predictions */
+.prediction-value.high-confidence.attack {
+    color: #ffffff;
+    background: rgba(239, 68, 68, 0.9);
+    border: 2px solid #ef4444;
+}
+
+.prediction-value.high-confidence.benign {
+    color: #ffffff;
+    background: rgba(16, 185, 129, 0.9);
+    border: 2px solid #10b981;
+}
+
+.prediction-value.low-confidence {
+    color: #000000;
+    background: rgba(245, 158, 11, 0.7);
+    border: 2px solid #f59e0b;
+}
+
+/* Confidence badges */
+.confidence-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.confidence-high {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.confidence-medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+
+.confidence-low {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+/* Metadata section */
+.metadata {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Sensitivity box */
+.sensitivity-box {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+}
+
+.sensitivity-box h3 {
+    font-size: 1rem;
+    color: #f59e0b;
+    margin-bottom: 0.5rem;
+}
+
+.sensitivity-box p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Tooltips */
+label[title] {
+    cursor: help;
+    border-bottom: 1px dotted var(--text-secondary);
+}
+
+.probability-bars {
+    margin-bottom: 1rem;
+}
+
+.bar-wrapper {
+    display: grid;
+    grid-template-columns: 150px 1fr 60px;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.bar-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.bar-container {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 4px;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.bar-value {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.chart-container {
+    flex-grow: 1;
+    min-height: 180px;
+    /* Reduced height */
+    position: relative;
+    margin-bottom: 0.75rem;
+    /* Reduced margin */
+}
+
+.insight-box {
+    margin-top: 0;
+    padding: 0.75rem;
+    /* Reduced padding */
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    word-break: break-word;
+    /* Prevent overflow */
+}
+
+.insight-box h3 {
+    font-size: 1rem;
+    color: var(--success-color);
+    margin-bottom: 0.5rem;
+}
+
+.insight-box p {
+    font-size: 0.95rem;
+}

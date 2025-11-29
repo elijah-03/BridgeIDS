@@ -1,0 +1,26 @@
+We are using the precleaned parquet format of NSW-Distrinet-CSE-CIC-IDS2018
+- https://www.kaggle.com/datasets/dhoogla/distrinetcsecicids2018?resource=download
+- Load in Python with one line per file: df = pd.read_parquet("DoS1-Thursday-15-02-2018.parquet") and then concatenate as needed.
+
+Key Dataset Notes
+
+    The Parquet files are cleaned and ready for ML: No missing values, duplicates, or dtype errors—ideal for XGBoost and interactive visualization work.
+
+    Each Parquet file corresponds to a specific attack scenario (e.g., DoS1-Thursday-15-02-2018.parquet), making it easy to sample or analyze attack types individually.
+
+    The dataset is extremely large (over 16 million flows), so for prototyping or fast SHAP/LIME, consider sampling or using only a subset of files.
+
+    Labeling is fixed: The Distrinet team corrected major labeling errors from the original CSE-CIC-IDS2018 release, so attack labels are trustworthy for interpretability studies.
+
+    Timestamps are preserved: You can extract hour-of-day, day-of-week, etc., for temporal attack pattern analysis.
+
+    Feature set matches original CICFlowMeter: Includes all standard flow features (duration, bytes, packets, ports, protocols, flags, etc.), suitable for feature importance and "what-if" scenario exploration.
+
+    AWS environment noise: Some background AWS infrastructure traffic is present; for pure attack analysis, filter out flows with internal AWS IPs or irrelevant protocols.
+
+    Attack categories: Covers DoS, Brute Force, Web Attacks, Infiltration, Bot, PortScan, DDoS, etc., enabling rich attack type comparisons.
+
+    Balanced normal/attack ratio: Still skewed (normal traffic dominates), so use XGBoost’s scale_pos_weight for training or stratified sampling for analysis.
+
+    File naming convention: Use the filename to identify attack type, date, and scenario—critical for reproducibility and filtering.
+​
