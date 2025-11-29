@@ -2,6 +2,9 @@
 
 A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trained on the CSE-CIC-IDS2018 dataset. This project focuses on **interpretability**, providing real-time insights into why specific network traffic is classified as malicious or benign.
 
+## Test Server
+-   https://interp-ml-ids.coryandcody.digital/
+
 ## Features
 
 -   **Real-time Prediction**: Classifies traffic into 6 categories: Benign, DoS, DDoS, Brute Force, Web Attack, and Bot/Infiltration.
