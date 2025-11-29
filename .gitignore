@@ -10,3 +10,5 @@ CSECICIDS2018_improved/Wednesday-21-02-2018.csv
 CSECICIDS2018_improved/Wednesday-28-02-2018.csv
 venv/
 .venv/
+__pycache__/
+*.pyc
