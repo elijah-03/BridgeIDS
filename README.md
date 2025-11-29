@@ -18,7 +18,7 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
 
 1.  **Clone the repository**:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/elijah-03/Interp-ML-IDS
     cd Interp-ML-IDS
     ```
 
