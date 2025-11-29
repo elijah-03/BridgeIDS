@@ -31,6 +31,15 @@ try:
     scaler = joblib.load(SCALER_PATH)
     le = joblib.load(LE_PATH)
     feature_list = joblib.load(FEATURE_LIST_PATH)
+    
+    # Force model to use CPU for inference to avoid mismatch warnings
+    # We need to set it on the booster directly for loaded models
+    try:
+        if hasattr(model, 'get_booster'):
+            model.get_booster().set_param('device', 'cpu')
+    except Exception as e:
+        print(f"Warning: Could not set device to CPU: {e}")
+        
     print("Artifacts loaded successfully.")
 except Exception as e:
     print(f"Error loading artifacts: {e}")
@@ -234,14 +243,16 @@ def predict():
         df = pd.DataFrame([input_data])
         
         # Create feature array in correct order
-        features = np.array([input_data.get(feature, 0) for feature in feature_list]).reshape(1, -1)
+        # Ensure df columns are in the correct order for the scaler
+        df = df[feature_list]
+        features = df.values # Keep features as numpy array for other calculations
         
         print("\n--- Received Features ---")
         for i, feature in enumerate(feature_list):
             print(f"{feature}: {features[0][i]}")
         
-        # Scale features
-        features_scaled = scaler.transform(features)
+        # Scale features using the DataFrame to preserve feature names
+        features_scaled = scaler.transform(df)
         
         # Predict
         prediction = model.predict(features_scaled)
@@ -301,7 +312,9 @@ def predict():
                     for reduction_pct in [10, 20, 30, 40, 50, 60, 70, 80]:
                         modified_features = features.copy()
                         modified_features[0][idx] = current_value * (1 - reduction_pct/100)
-                        modified_scaled = scaler.transform(modified_features)
+                        # Convert to DataFrame to preserve feature names for scaler
+                        modified_df = pd.DataFrame(modified_features, columns=feature_list)
+                        modified_scaled = scaler.transform(modified_df)
                         new_pred_probs = model.predict_proba(modified_scaled)[0]
                         new_pred_class = le.inverse_transform([np.argmax(new_pred_probs)])[0]
                         new_max_prob = float(np.max(new_pred_probs))
@@ -346,7 +359,9 @@ def predict():
                     for increase_factor in [2, 3, 5, 10, 20]:
                         modified_features = features.copy()
                         modified_features[0][idx] = current_value * increase_factor
-                        modified_scaled = scaler.transform(modified_features)
+                        # Convert to DataFrame to preserve feature names for scaler
+                        modified_df = pd.DataFrame(modified_features, columns=feature_list)
+                        modified_scaled = scaler.transform(modified_df)
                         new_pred_probs = model.predict_proba(modified_scaled)[0]
                         new_pred_class = le.inverse_transform([np.argmax(new_pred_probs)])[0]
                         
