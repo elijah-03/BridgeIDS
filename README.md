@@ -4,7 +4,7 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
 
 ## Research Report
 A comprehensive research report detailing the methodology, system design, and evaluation results is available here:
-**[Read the Full Report](docs/Interp-ML-IDS_Report.md)**
+**[Read the Full Report](docs/BridgeIDS_Report.md)**
 
 ## Test Server
 -   https://interp-ml-ids.coryandcody.digital/
@@ -82,7 +82,7 @@ A comprehensive research report detailing the methodology, system design, and ev
 -   `static/`: CSS styles and JavaScript logic for the frontend.
 -   `templates/`: HTML templates for the web interface.
 -   `docs/`: Documentation and research reports.
-    -   `Interp-ML-IDS_Report.md`: Full project report.
+    -   `BridgeIDS_Report.md`: Full project report.
 -   `*.joblib`: Serialized model and preprocessing artifacts.
 
 ## Dataset
