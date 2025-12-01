@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.2)  1 DEC 2025 16:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.2)  1 DEC 2025 16:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -478,34 +478,33 @@ Package hyperref Info: Link coloring OFF on input line 19.
 \@outlinefile=\write3
 \openout3 = `BridgeIDS_Report.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 53.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 53.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 LaTeX Font Info:    Trying to load font information for OML+ptm on input line 5
-4.
+1.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlptm.fd
 File: omlptm.fd 
 )
 LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 54.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf
--dist/fonts/enc/dvips/base/8r.enc}
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 51.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 68.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 68.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
+f-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \hbox (badness 2229) in paragraph at lines 128--129
-[]\OT1/ptm/b/n/10 Exceptional Pre-ci-sion\OT1/ptm/m/n/10 : Brute Force (99.96%)
-, DDoS
+Underfull \hbox (badness 2073) in paragraph at lines 177--178
+[]\OT1/ptm/b/n/10 Latency\OT1/ptm/m/n/10 : \OML/cmm/m/it/10 <\OT1/ptm/m/n/10 50
+ms sup-ports real-time de-ploy-ment on
  []
 
 [2] (./BridgeIDS_Report.bbl)
@@ -528,16 +527,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `BridgeIDS_Report.out' has not changed.
-(rerunfilecheck)             Checksum: 3C84DE36A9F18C9C20D9611D575D2079;2832.
+(rerunfilecheck)             Checksum: D9ED82E978BD8A7827598863AFAF2219;3472.
  ) 
 Here is how much of TeX's memory you used:
- 11370 strings out of 474222
- 176257 string characters out of 5748734
+ 11386 strings out of 474222
+ 176423 string characters out of 5748734
  1947975 words of memory out of 5000000
- 33432 multiletter control sequences out of 15000+600000
+ 33435 multiletter control sequences out of 15000+600000
  597282 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,8n,79p,1237b,489s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,1237b,541s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
@@ -546,10 +545,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
 /times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on BridgeIDS_Report.pdf (3 pages, 122407 bytes).
+Output written on BridgeIDS_Report.pdf (3 pages, 121818 bytes).
 PDF statistics:
- 175 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 199 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 169 words of extra memory for PDF output out of 10000 (max. 10000000)
 
