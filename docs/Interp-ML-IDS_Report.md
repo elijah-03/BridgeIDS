@@ -92,10 +92,10 @@ This ensures fair attribution of the prediction output among input features.
 #### 3.3.2 Algorithm: Real-Time Sensitivity Analysis
 The core novelty of our system is the interactive "what-if" analysis. The algorithm is as follows:
 
-1.  **Input**: User selects a target feature $F_i$ and a new value $v_{new}$.
-2.  **Vector Construction**: Create a modified feature vector $X'_{user} = \{x_1, ..., x_i=v_{new}, ..., x_n\}$.
-3.  **Inference**: Compute $P(Attack | X'_{user}) = Model.predict\_proba(X'_{user})$.
-4.  **Delta Calculation**: $\Delta P = P(Attack | X'_{user}) - P(Attack | X_{original})$.
+1.  **Input**: User selects a target feature `F_i` and a new value `v_new`.
+2.  **Vector Construction**: Create a modified feature vector `X'_user = {x_1, ..., x_i=v_new, ..., x_n}`.
+3.  **Inference**: Compute `P(Attack | X'_user) = Model.predict_proba(X'_user)`.
+4.  **Delta Calculation**: `ΔP = P(Attack | X'_user) - P(Attack | X_original)`.
 5.  **Visualization**: Update the probability distribution chart and highlight the shift.
 
 This allows an analyst to answer complex questions. For example, by sliding the `Dst Port` from 80 to 8080, they can observe if the model considers non-standard ports as inherently more suspicious for a given flow profile.
