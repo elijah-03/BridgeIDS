@@ -12,7 +12,7 @@ Current Explainable AI (XAI) techniques, such as SHAP (SHapley Additive exPlanat
 
 This paper addresses this limitation by **bridging the gap** between ML predictions and human interpretability. We propose a system that goes beyond static plots to provide **interactive interpretability**. Our key contributions are:
 1.  **High-Performance Detection**: An XGBoost-based IDS trained on the CSE-CIC-IDS2018 dataset, utilizing a novel class balancing strategy (Benign Downsampling + SMOTE) to handle the massive class imbalance inherent in network traffic.
-23. **Interactive Dashboard**: A Flask-based web application serving as the analyst's cockpit.
+2.  **Interactive Dashboard**: A Flask-based web application serving as the analyst's cockpit.
     *   **Frontend**: Built with HTML5, CSS3, and **Chart.js** for dynamic visualizations.
     *   **Features**:
         *   **Logarithmic Sliders**: To handle the wide dynamic range of network features (e.g., Flow Duration from 0 to 120M).
@@ -37,13 +37,13 @@ The system follows a modular microservices-like architecture, designed for scala
 
 ```mermaid
 graph TD
-    A[Network Traffic (CSV)] -->|Ingestion| B(Data Pipeline)
-    B -->|Cleaning & Preprocessing| C{Feature Engineering}
-    C -->|Feature Vector| D[XGBoost Model]
-    D -->|Prediction| E[Flask Backend API]
-    E -->|JSON Response| F[Web Dashboard]
-    F -->|User Interaction| E
-    E -->|Sensitivity Analysis| D
+    A["Network Traffic (CSV)"] -->|Ingestion| B("Data Pipeline")
+    B -->|"Cleaning & Preprocessing"| C{"Feature Engineering"}
+    C -->|"Feature Vector"| D["XGBoost Model"]
+    D -->|Prediction| E["Flask Backend API"]
+    E -->|"JSON Response"| F["Web Dashboard"]
+    F -->|"User Interaction"| E
+    E -->|"Sensitivity Analysis"| D
 ```
 
 **Components**:
@@ -101,10 +101,6 @@ The core novelty of our system is the interactive "what-if" analysis. The algori
 This allows an analyst to answer complex questions. For example, by sliding the `Dst Port` from 80 to 8080, they can observe if the model considers non-standard ports as inherently more suspicious for a given flow profile.
 
 ## 4. Evaluation
-*Note: Evaluation metrics are based on a 1% stratified sample of the test set to ensure rapid verification.*
-
-### 4.1 Performance Metrics
-### 4.1 Performance Metrics
 ### 4.1 Performance Metrics
 The model was evaluated on a stratified **20% sample** of the entire dataset (approx. **12.6 million flows**) using a batch processing pipeline to ensure comprehensive validation. The system achieved an **Overall Accuracy of 97.66%** and a **Weighted F1-Score of 0.9770**.
 
@@ -120,17 +116,7 @@ The model was evaluated on a stratified **20% sample** of the entire dataset (ap
 
 *Discussion*: The results on the large-scale evaluation confirm the findings from the smaller sample. The model maintains exceptional performance on volumetric attacks and Benign traffic. The consistency of these metrics across 12.6 million samples provides high confidence in the system's stability and generalization capability. The persistent issue with Web Attack detection (0% recall) confirms that the current feature set—derived primarily from flow statistics—is insufficient for payload-based attacks, suggesting a need for future work involving deep packet inspection or application-layer features.
 
-**Table 1: Per-Class Performance**
-| Class | Accuracy | Average Confidence |
-| :--- | :--- | :--- |
-| **Benign** | 98.38% | 98.65% |
-| **Brute Force** | **100.00%** | 96.44% |
-| **Bot/Infiltration** | 93.92% | 97.20% |
-| **DoS** | 86.76% | 76.12% |
-| **DDoS** | 76.00% | 72.18% |
-| **Web Attack** | 0.00% | 96.26% |
 
-*Discussion*: The model demonstrates exceptional performance on volumetric attacks (Brute Force, Botnets) and Benign traffic. DoS and DDoS detection is robust but shows some confusion, likely due to the similarity between these attack types. Web Attacks remain a challenge, with the model failing to generalize to the test set for this minority class—a known issue in IDS research that highlights the need for specialized feature engineering for application-layer attacks.
 
 ### 4.2 Qualitative Evaluation: Case Studies
 **Case Study 1: DoS vs. Benign**
