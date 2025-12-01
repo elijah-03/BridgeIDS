@@ -9,10 +9,48 @@ Dataset Loader Module
 This module handles the loading of the CSE-CIC-IDS2018 dataset from CSV files.
 It supports:
 1.  **Directory Scanning**: Finds all CSV files in a specified directory.
-2.  **Sampling**: Loads a fraction of data from each file to manage memory usage.
+2.  **Stratified Sampling**: Ensures minimum samples per class while respecting overall fraction.
 3.  **Type Enforcement**: Ensures columns are loaded with efficient data types.
 4.  **Concatenation**: Combines all sampled data into a single DataFrame.
 """
+
+def stratified_sample_with_min(df, frac=0.1, min_samples=100, random_state=42):
+    """
+    Performs stratified sampling ensuring each class has at least min_samples.
+    
+    Args:
+        df: DataFrame with 'Label' column
+        frac: Target fraction to sample (applied to each class)
+        min_samples: Minimum samples to keep for each class
+        random_state: Random seed for reproducibility
+        
+    Returns:
+        pd.DataFrame: Stratified sampled DataFrame
+    """
+    if 'Label' not in df.columns:
+        print("Warning: 'Label' column not found, returning full DataFrame")
+        return df
+    
+    sampled_dfs = []
+    for label in df['Label'].unique():
+        class_df = df[df['Label'] == label]
+        
+        # Calculate how many samples to take
+        n_target = int(len(class_df) * frac)
+        n_samples = max(n_target, min(min_samples, len(class_df)))
+        
+        # Sample
+        if n_samples >= len(class_df):
+            sampled_dfs.append(class_df)
+        else:
+            sampled_dfs.append(class_df.sample(n=n_samples, random_state=random_state))
+    
+    result = pd.concat(sampled_dfs, ignore_index=True)
+    print(f"Stratified sampling: {len(df)} -> {len(result)} samples")
+    print(f"Class distribution after sampling:")
+    print(result['Label'].value_counts())
+    return result
+
 
 def load_and_inspect(directory_path, sample_fraction=0.1):
     """
@@ -82,9 +120,14 @@ def load_and_inspect(directory_path, sample_fraction=0.1):
                 # Filter to only required columns (double check)
                 df = df[[c for c in usecols if c in df.columns]]
                 
-                # Sample the data
+                # OPTIMIZATION: Sample IMMEDIATELY to save memory
+                # Instead of loading all 16M rows then sampling, we sample each file
                 if sample_fraction < 1.0:
-                    df = df.sample(frac=sample_fraction, random_state=42)
+                    # We can't do perfect stratified sampling per file without knowing global distribution,
+                    # but we can do random sampling or stratified per file.
+                    # Stratified per file is safer to preserve rare classes if they are concentrated in one file.
+                    print(f"  Sampling {sample_fraction*100}% of {os.path.basename(file)}...")
+                    df = stratified_sample_with_min(df, frac=sample_fraction, min_samples=100)
                 
                 df_list.append(df)
                 
@@ -97,6 +140,10 @@ def load_and_inspect(directory_path, sample_fraction=0.1):
             
         print("Concatenating dataframes...")
         full_df = pd.concat(df_list, ignore_index=True)
+        
+        # No need to sample again
+        # print(f"Applying stratified sampling (fraction={sample_fraction})...")
+        # full_df = stratified_sample_with_min(full_df, frac=sample_fraction, min_samples=100)
         
         print("Dataset loaded successfully.\n")
         print("--- Dataset Info ---")

@@ -1,21 +1,31 @@
 # Interpretable Machine Learning for Intrusion Detection
 
-A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trained on the CSE-CIC-IDS2018 dataset. This project focuses on **interpretability**, providing real-time insights into why specific network traffic is classified as malicious or benign.
+A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trained on the CSE-CIC-IDS2018 dataset. This project focuses on **"Bridging the Gap"** between high-performance machine learning and human interpretability, providing real-time, interactive insights into why specific network traffic is classified as malicious.
+
+## Research Report
+A comprehensive research report detailing the methodology, system design, and evaluation results is available here:
+**[Read the Full Report](docs/Interp-ML-IDS_Report.md)**
 
 ## Test Server
 -   https://interp-ml-ids.coryandcody.digital/
 
-## Features
+## Key Features
 
--   **Real-time Prediction**: Classifies traffic into 6 categories: Benign, DoS, DDoS, Brute Force, Web Attack, and Bot/Infiltration.
--   **Interpretability Insights**:
-    -   **Key Drivers**: Identifies the top features contributing to the prediction using Z-score analysis.
-    -   **Pattern Detection**: Maps feature combinations to known attack patterns (e.g., "Slowloris-style attack", "SQL Injection").
-    -   **Sensitivity Analysis**: Performs "what-if" scenarios to determine boundary conditions (e.g., "Reducing Flow Duration by 30% would change prediction to Benign").
--   **Interactive Control Panel**:
-    -   Adjust feature values using sliders with logarithmic scaling for wide-range inputs.
-    -   Apply presets for common attack scenarios.
-    -   View confidence levels and probability distributions.
+### High-Performance Detection
+-   **Model**: XGBoost Classifier with Histogram-based optimization.
+-   **Accuracy**: **97.66%** (Evaluated on 12.6 million samples).
+-   **Classes**: Benign, DoS, DDoS, Brute Force, Web Attack, Bot/Infiltration.
+
+### Interactive Interpretability
+-   **"What-If" Analysis**: Adjust feature values (e.g., ports, flow duration) in real-time to see how the prediction changes.
+-   **Key Drivers**: Identifies the top features contributing to the prediction using Z-score analysis and SHAP concepts.
+-   **Pattern Detection**: Maps feature combinations to known attack patterns (e.g., "Slowloris-style attack", "SQL Injection").
+-   **Safety Prescriptions**: Suggests counterfactuals (minimal changes) to reclassify traffic as benign.
+
+### Interactive Control Panel
+-   **Logarithmic Sliders**: Handle the wide dynamic range of network features (0 to 120M+).
+-   **Attack Presets**: Pre-configured buttons to simulate common attacks (DoS GoldenEye, Brute Force SSH, etc.).
+-   **Real-time Visualization**: Dynamic probability charts and confidence gauges.
 
 ## Installation
 
@@ -42,9 +52,15 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
     ```bash
     python train_model.py
     ```
-    This script loads the dataset, preprocesses it, trains the XGBoost model, and saves the necessary artifacts (`xgb_model.joblib`, `scaler.joblib`, etc.).
+    This script loads the dataset, preprocesses it (using Benign Downsampling + SMOTE), trains the XGBoost model, and saves the artifacts (`xgb_model.joblib`, `scaler.joblib`, etc.).
 
-2.  **Run the Web Interface**:
+2.  **Evaluate the Model**:
+    ```bash
+    python evaluate_model.py
+    ```
+    Runs a batch evaluation on the dataset to generate performance metrics.
+
+3.  **Run the Web Interface**:
     ```bash
     flask run
     ```
@@ -53,19 +69,20 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
     python app.py
     ```
 
-3.  **Access the Dashboard**:
+4.  **Access the Dashboard**:
     Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ## File Structure
 
 -   `app.py`: Main Flask application backend. Handles predictions and interpretability logic.
 -   `train_model.py`: Script to train the XGBoost model and save artifacts.
+-   `evaluate_model.py`: Script for batch evaluation of the model.
 -   `preprocess.py`: Data cleaning, feature selection, and preprocessing logic.
 -   `load_dataset.py`: Utility to load and sample the CSE-CIC-IDS2018 dataset.
 -   `static/`: CSS styles and JavaScript logic for the frontend.
 -   `templates/`: HTML templates for the web interface.
--   `dataset-notes`: Notes on the dataset source and characteristics.
--   `Improved_CSE-CIC-IDS_2018_Documentation`: Documentation for the improved dataset.
+-   `docs/`: Documentation and research reports.
+    -   `Interp-ML-IDS_Report.md`: Full project report.
 -   `*.joblib`: Serialized model and preprocessing artifacts.
 
 ## Dataset

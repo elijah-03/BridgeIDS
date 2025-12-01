@@ -8,9 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 
 <body>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
     <div class="container">
         <header>
             <h1>IDS Control Panel</h1>
@@ -22,74 +27,152 @@
 
             <!-- Identity -->
             <div class="control-group">
-                <h3>Identity</h3>
+                <h3>Connection</h3>
                 <div class="input-wrapper">
                     <label for="Dst Port"
                         title="Destination port - service endpoint being accessed (e.g., 80=HTTP, 443=HTTPS)">Dst
-                        Port (Service)</label>
-                    <input type="number" id="Dst Port" min="0" max="65535" value="80">
+                        Port (Service)
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">The destination port determines which service is being
+                                accessed. Common ports: 80 (HTTP), 443 (HTTPS), 22 (SSH), 21 (FTP). Unusual ports may
+                                indicate malicious activity.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="number" id="Dst Port" min="0" max="65535" value="80" required>
+                        <button class="analyze-btn" data-feature="Dst Port"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                     <span class="helper-text" id="port-helper">HTTP (Web)</span>
                 </div>
                 <div class="input-wrapper">
-                    <label for="Protocol" title="Network protocol used (TCP=6, UDP=17, ICMP=1)">Protocol</label>
-                    <select id="Protocol">
-                        <option value="6">TCP (6)</option>
-                        <option value="17">UDP (17)</option>
-                        <option value="1">ICMP (1)</option>
-                    </select>
+                    <label for="Protocol" title="Network protocol used (TCP=6, UDP=17, ICMP=1)">Protocol
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Transport protocol type. TCP (6) used for reliable
+                                connections, UDP (17) for fast unreliable data, ICMP (1) for network diagnostics.
+                                Attackers often use unusual protocols.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <select id="Protocol">
+                            <option value="6">TCP (6)</option>
+                            <option value="17">UDP (17)</option>
+                            <option value="1">ICMP (1)</option>
+                        </select>
+                        <button class="analyze-btn" data-feature="Protocol"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Time -->
             <div class="control-group">
-                <h3>Time</h3>
+                <h3>Timing</h3>
                 <div class="input-wrapper">
                     <label for="Hour" title="Time of day when traffic occurred (0=midnight, 12=noon)">Hour of Day
-                        (0-23)</label>
-                    <input type="range" id="Hour" min="0" max="23" step="1" value="12">
-                    <input type="number" class="value-input" id="val-Hour" min="0" max="23" value="12">
+                        (0-23)
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Hour when traffic occurred (24-hour format). Attacks often
+                                happen during off-hours (late night/early morning) when monitoring is reduced.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Hour" min="0" max="23" step="1" value="12">
+                        <input type="number" class="value-input" id="val-Hour" min="0" max="23" value="12">
+                        <button class="analyze-btn" data-feature="Hour"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Volume -->
             <div class="control-group">
-                <h3>Volume</h3>
+                <h3>Traffic Volume</h3>
                 <div class="input-wrapper">
                     <label for="Total Fwd Packets" title="Number of packets sent from source to destination">Total
-                        Fwd Packets</label>
-                    <input type="range" id="Total Fwd Packets" min="0" max="200000" step="1" value="10">
-                    <input type="number" class="value-input" id="val-Total Fwd Packets" min="0" max="200000" value="10">
+                        Packets Sent
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Total number of packets sent. Very high values (>10,000) may
+                                indicate flooding attacks like DDoS. Very low values may indicate reconnaissance.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Total Fwd Packets" min="0" max="200000" step="1" value="10">
+                        <input type="number" class="value-input" id="val-Total Fwd Packets" min="0" max="200000"
+                            value="10" required>
+                        <span class="unit-label">packets</span>
+                        <button class="analyze-btn" data-feature="Total Fwd Packets"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
                 <div class="input-wrapper">
                     <label for="Fwd Packets Length Total"
-                        title="Total bytes in forward direction (logarithmic scale)">Total Fwd Bytes</label>
-                    <input type="range" id="Fwd Packets Length Total" min="0" max="100" step="0.1" value="50"
-                        data-log-scale="true">
-                    <input type="number" class="value-input" id="val-Fwd Packets Length Total" min="1" max="10000000"
-                        step="1" value="1000">
+                        title="Total bytes sent in forward direction (logarithmic scale)">Total Bytes Sent
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Total amount of data sent in bytes. Large values (>1MB) may
+                                indicate data exfiltration. Small values with many packets suggest scanning or
+                                probing.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Fwd Packets Length Total" min="0" max="100" step="0.1" value="50"
+                            data-log-scale="true">
+                        <input type="number" class="value-input" id="val-Fwd Packets Length Total" min="1"
+                            max="10000000" step="1" value="1000" required>
+                        <span class="unit-label">bytes</span>
+                        <button class="analyze-btn" data-feature="Fwd Packets Length Total"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Dynamics -->
             <div class="control-group">
-                <h3>Dynamics</h3>
+                <h3>Traffic Pattern</h3>
                 <div class="input-wrapper">
-                    <label for="Flow Duration"
-                        title="Total time the connection was active in microseconds (logarithmic scale)">Flow
-                        Duration (µs)</label>
-                    <input type="range" id="Flow Duration" min="0" max="100" step="0.1" value="50"
-                        data-log-scale="true">
-                    <input type="number" class="value-input" id="val-Flow Duration" min="1" max="120000000" step="0.01"
-                        value="1000000">
+                    <label for="Flow Duration" title="How long the network connection lasted">Connection
+                        Duration
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">How long the connection lasted in microseconds. Extremely long
+                                connections (>100 seconds) may indicate Slowloris attacks. Very short connections may
+                                indicate scanning.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Flow Duration" min="0" max="100" step="0.1" value="50"
+                            data-log-scale="true">
+                        <input type="number" class="value-input" id="val-Flow Duration" min="1" max="120000000"
+                            step="0.01" value="1000000">
+                        <span class="unit-label">μs</span>
+                        <button class="analyze-btn" data-feature="Flow Duration"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
                 <div class="input-wrapper">
-                    <label for="Flow IAT Mean"
-                        title="Average time between packets in microseconds (logarithmic scale)">Flow IAT Mean
-                        (µs)</label>
-                    <input type="range" id="Flow IAT Mean" min="0" max="100" step="0.1" value="50"
-                        data-log-scale="true">
-                    <input type="number" class="value-input" id="val-Flow IAT Mean" min="1" max="10000000" step="0.01"
-                        value="100000">
+                    <label for="Flow IAT Mean" title="Average time delay between packets">Avg Time Between
+                        Packets
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Inter-Arrival Time - average delay between packets in
+                                microseconds. Very low IAT suggests flooding attacks. Unusually consistent IAT may
+                                indicate automated tools.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Flow IAT Mean" min="0" max="100" step="0.1" value="50"
+                            data-log-scale="true">
+                        <input type="number" class="value-input" id="val-Flow IAT Mean" min="1" max="10000000"
+                            step="0.01" value="100000">
+                        <span class="unit-label">μs</span>
+                        <button class="analyze-btn" data-feature="Flow IAT Mean"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
             </div>
 
@@ -97,28 +180,58 @@
             <div class="control-group">
                 <h3>Packet Size</h3>
                 <div class="input-wrapper">
-                    <label for="Fwd Packet Length Max" title="Maximum size of forwarded packets in bytes">Max Fwd
-                        Packet Size</label>
-                    <input type="range" id="Fwd Packet Length Max" min="0" max="5000" step="0.01" value="64">
-                    <input type="number" class="value-input" id="val-Fwd Packet Length Max" min="0" max="5000"
-                        step="0.01" value="64">
+                    <label for="Fwd Packet Length Max" title="Maximum size of forwarded packets in bytes">Max
+                        Packet Size
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">Maximum packet size in bytes. Normal packets are 60-1500
+                                bytes. Very small packets (<60) may indicate fragmentation attacks. Large packets (>
+                                    1500) may indicate tunneling.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Fwd Packet Length Max" min="0" max="5000" step="0.01" value="64">
+                        <input type="number" class="value-input" id="val-Fwd Packet Length Max" min="0" max="5000"
+                            step="0.01" value="64" required>
+                        <span class="unit-label">bytes</span>
+                        <button class="analyze-btn" data-feature="Fwd Packet Length Max"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Behavior -->
             <div class="control-group">
-                <h3>Behavior (Flags)</h3>
+                <h3>Connection Flags</h3>
                 <div class="flags-grid">
                     <div class="flag-item">
-                        <label for="SYN Flag Count" title="Number of SYN (connection initiation) flags">SYN</label>
+                        <label for="SYN Flag Count" title="Number of SYN (connection initiation) flags">SYN
+                            <span class="tooltip-wrapper tooltip-right">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-content">SYN flags initiate TCP connections. High SYN counts
+                                    without corresponding ACK/FIN may indicate SYN flood attacks.</span>
+                            </span>
+                        </label>
                         <input type="number" id="SYN Flag Count" min="0" max="1" value="0">
                     </div>
                     <div class="flag-item">
-                        <label for="RST Flag Count" title="Number of RST (connection reset) flags">RST</label>
+                        <label for="RST Flag Count" title="Number of RST (connection reset) flags">RST
+                            <span class="tooltip-wrapper tooltip-right">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-content">RST flags abruptly terminate connections. High RST counts
+                                    may indicate port scanning or connection hijacking attempts.</span>
+                            </span>
+                        </label>
                         <input type="number" id="RST Flag Count" min="0" max="1" value="0">
                     </div>
                     <div class="flag-item">
-                        <label for="FIN Flag Count" title="Number of FIN (connection termination) flags">FIN</label>
+                        <label for="FIN Flag Count" title="Number of FIN (connection termination) flags">FIN
+                            <span class="tooltip-wrapper tooltip-right">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-content">FIN flags gracefully terminate connections. Unusual FIN
+                                    counts may indicate improper connection handling or evasion techniques.</span>
+                            </span>
+                        </label>
                         <input type="number" id="FIN Flag Count" min="0" max="1" value="0">
                     </div>
                 </div>
@@ -126,13 +239,37 @@
 
             <!-- Technical -->
             <div class="control-group">
-                <h3>Technical</h3>
+                <h3>Advanced</h3>
                 <div class="input-wrapper">
-                    <label for="Init Fwd Win Bytes" title="Initial TCP window size in bytes (flow control)">Init Fwd
-                        Win Bytes</label>
-                    <input type="range" id="Init Fwd Win Bytes" min="0" max="65535" step="1" value="8192">
-                    <input type="number" class="value-input" id="val-Init Fwd Win Bytes" min="0" max="65535"
-                        value="8192">
+                    <label for="Init Fwd Win Bytes" title="TCP window size - controls data flow rate">TCP Window
+                        Size
+                        <span class="tooltip-wrapper">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-content">TCP window size controls flow rate (0-65535 bytes). Very small
+                                windows slow down transfers (DoS). Zero windows may indicate resource exhaustion
+                                attacks.</span>
+                        </span>
+                    </label>
+                    <div class="input-with-action">
+                        <input type="range" id="Init Fwd Win Bytes" min="0" max="65535" step="1" value="8192">
+                        <input type="number" class="value-input" id="val-Init Fwd Win Bytes" min="0" max="65535"
+                            value="8192">
+                        <span class="unit-label">bytes</span>
+                        <button class="analyze-btn" data-feature="Init Fwd Win Bytes"
+                            title="Analyze impact of this feature">🔍</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Modal -->
+            <div id="analysis-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h3 id="analysis-title">Feature Analysis</h3>
+                    <div class="chart-container-large">
+                        <canvas id="analysisChart"></canvas>
+                    </div>
+                    <p id="analysis-description" class="analysis-desc"></p>
                 </div>
             </div>
 
@@ -145,42 +282,226 @@
         <h2>Prediction</h2>
 
         <div class="prediction-presets-grid">
-            <div class="prediction-card">
-                <div class="prediction-result">
-                    <span id="prediction-text" class="prediction-value">Waiting for analysis...</span>
-                    <span id="confidence-badge" class="confidence-badge"></span>
+            <div class="left-column">
+                <div class=\"prediction-card">
+                    <div class=\"prediction-result">
+                        <span id="prediction-text" class="prediction-value">Waiting for analysis...</span>
+                        <span id="confidence-badge" class="confidence-badge"></span>
+                    </div>
+                    <div class="confidence-gauge" id="confidence-gauge-container" style="display: none;">
+                        <div class="confidence-gauge-fill" id="confidence-gauge-fill"></div>
+                    </div>
+                    <div class="metadata">
+                        <span id="timestamp-display"></span>
+                    </div>
                 </div>
-                <div class="metadata">
-                    <span id="timestamp-display"></span>
+
+                <div class="presets-card">
+                    <h3>Quick Presets</h3>
+                    <div class="preset-groups">
+                        <div class="preset-group">
+                            <h4>Benign</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="Benign_Normal"
+                                    title="Normal web browsing pattern - typical HTTP traffic with standard packet counts and timing">
+                                    <span class="tooltip-wrapper">
+                                        Normal
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Simulates regular web browsing with standard HTTP
+                                            traffic patterns, moderate packet counts, and normal timing.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="Benign_High"
+                                    title="Legitimate high-volume traffic - such as file downloads or streaming">
+                                    <span class="tooltip-wrapper">
+                                        High Traffic
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Simulates legitimate high-volume activity like
+                                            large file downloads, video streaming, or bulk data transfers.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="Benign_SSH"
+                                    title="Normal SSH session - secure remote access with typical encrypted traffic">
+                                    <span class="tooltip-wrapper">
+                                        SSH Session
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Simulates a normal SSH remote access session with
+                                            encrypted traffic and typical interactive timing patterns.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preset-group">
+                            <h4>DoS</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="DoS_Slowloris"
+                                    title="Slowloris attack - keeps connections open with slow HTTP requests to exhaust server resources">
+                                    <span class="tooltip-wrapper">
+                                        Slowloris
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Low-bandwidth DoS attack that keeps many
+                                            connections open with slow, incomplete HTTP requests to exhaust server
+                                            connection pool.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="DoS_Volumetric"
+                                    title="Volumetric DoS - overwhelms bandwidth with high volume of traffic">
+                                    <span class="tooltip-wrapper">
+                                        Volumetric
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">High-volume attack that floods the target with
+                                            massive amounts of traffic to consume all available bandwidth.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="DoS_Hulk"
+                                    title="Hulk DoS - generates unique obfuscated requests to bypass caching">
+                                    <span class="tooltip-wrapper">
+                                        Hulk
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Web DoS attack that generates unique, obfuscated
+                                            HTTP requests to evade caching mechanisms and overload web servers.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preset-group">
+                            <h4>DDoS</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="DDoS_SYN_Flood"
+                                    title="SYN Flood - sends massive SYN requests without completing handshake">
+                                    <span class="tooltip-wrapper">
+                                        SYN Flood
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Sends massive number of SYN packets without
+                                            completing TCP handshake, exhausting connection queue and preventing
+                                            legitimate connections.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="DDoS_UDP"
+                                    title="UDP Flood - floods target with UDP packets on random ports">
+                                    <span class="tooltip-wrapper">
+                                        UDP Flood
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Floods target with UDP packets to random ports,
+                                            forcing system to process and respond with ICMP unreachable messages.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="DDoS_HTTP_Flood"
+                                    title="HTTP Flood - sends legitimate-looking HTTP requests in massive volume">
+                                    <span class="tooltip-wrapper">
+                                        HTTP Flood
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Application-layer attack sending massive number of
+                                            seemingly legitimate HTTP GET/POST requests to overwhelm web server
+                                            resources.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preset-group">
+                            <h4>Brute Force</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="BruteForce_SSH"
+                                    title="SSH brute force - automated password guessing on SSH">
+                                    <span class="tooltip-wrapper">
+                                        SSH
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Automated attack attempting to guess SSH
+                                            credentials through repeated login attempts with different password
+                                            combinations.</span>
+                                    </span>
+                                </button>
+                                <button class="preset-btn" data-type="BruteForce_FTP"
+                                    title="FTP brute force - automated password guessing on FTP">
+                                    <span class="tooltip-wrapper">
+                                        FTP
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Automated attack systematically trying different
+                                            password combinations to gain unauthorized FTP access.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preset-group">
+                            <h4>Web Attack</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="Web_Attack_XSS"
+                                    title="Cross-Site Scripting - injects malicious scripts into web pages">
+                                    <span class="tooltip-wrapper">
+                                        Web Attack (XSS)
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Web application attack attempting to inject
+                                            malicious JavaScript into web pages viewed by other users, often through
+                                            input fields or URLs.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preset-group">
+                            <h4>Bot</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-type="Bot_Traffic"
+                                    title="Botnet traffic - automated malicious traffic from compromised systems">
+                                    <span class="tooltip-wrapper">
+                                        Bot Traffic
+                                        <span class="tooltip-icon">?</span>
+                                        <span class="tooltip-content">Traffic from compromised machines (botnet) showing
+                                            automated patterns, unusual timing, and suspicious behavior indicative of
+                                            malware activity.</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="presets-card">
-                <h3>Quick Presets</h3>
-                <div class="preset-buttons">
-                    <button class="preset-btn" data-type="Benign">Benign</button>
-                    <button class="preset-btn" data-type="DoS">DoS</button>
-                    <button class="preset-btn" data-type="DDoS">DDoS</button>
-                    <button class="preset-btn" data-type="Brute Force">Brute Force</button>
-                    <button class="preset-btn" data-type="Web Attack">Web Attack</button>
-                    <button class="preset-btn" data-type="Bot/Infiltration">Bot/Infiltration</button>
+            <div class="results-panel">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('insights')">Insights</button>
+                    <button class="tab-btn" onclick="switchTab('sensitivity')">Sensitivity</button>
+                    <button class="tab-btn" onclick="switchTab('shap')">SHAP</button>
+                    <button class="tab-btn" onclick="switchTab('global')">Local Rule</button>
+                </div>
+
+                <div class="tab-content active" id="insights-box">
+                    <h4>Key Findings</h4>
+                    <div id="counterfactuals-section" style="display: none; margin-bottom: 15px;"></div>
+                    <div id="insight-text">Waiting for prediction...</div>
+                </div>
+
+                <div class="tab-content" id="sensitivity-box">
+                    <h4>Sensitivity Analysis</h4>
+                    <div id="sensitivity-text">Run a prediction to see sensitivity analysis.</div>
+                </div>
+
+                <div class="tab-content" id="shap-container">
+                    <h4>Feature Contribution (SHAP)</h4>
+                    <img id="shap-plot" src="" alt="SHAP Feature Importance Plot"
+                        style="max-width: 100%; border: 1px solid var(--border-color); border-radius: 4px; display: none;">
+                </div>
+
+                <div class="tab-content" id="global-rules-box">
+                    <h4>Local Decision Rule</h4>
+                    <div id="global-rules-tree" class="tree-view">
+                        <!-- Rules will be loaded here -->
+                        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+                            Loading global rules...
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
+
+
         </div>
         <div id="probability-bars" class="probability-bars"></div>
         <div class="chart-container">
             <canvas id="predictionChart"></canvas>
         </div>
-        <div id="sensitivity-box" class="sensitivity-box" style="display:none;">
-            <h3>Sensitivity Analysis</h3>
-            <p id="sensitivity-text"></p>
-        </div>
-        <div id="insight-box" class="insight-box">
-            <h3>Insight</h3>
-            <p id="insight-text">Adjust features to see how the model reacts.</p>
-        </div>
+
     </section>
-    </main>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

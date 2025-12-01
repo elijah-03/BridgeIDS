@@ -4,7 +4,6 @@ import sys
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from imblearn.over_sampling import SMOTE
-from collections import Counter
 
 # Import the load function from load_dataset.py
 try:
@@ -20,10 +19,56 @@ This module prepares the raw network traffic data for machine learning.
 Key steps:
 1.  **Label Cleaning**: Maps granular attack labels (e.g., 'DoS Hulk') to broad categories ('DoS').
 2.  **Feature Selection**: Selects the 12 core features used by the IDS.
-3.  **Data Cleaning**: Handles missing values, NaNs, and infinities.
-4.  **Splitting**: Splits data into training and testing sets.
-5.  **Scaling**: Normalizes features using StandardScaler.
+3.  **Feature Engineering**: Creates derived features from base features.
+4.  **Data Cleaning**: Handles missing values, NaNs, and infinities.
+5.  **Splitting**: Splits data into training and testing sets.
+6.  **Scaling**: Normalizes features using StandardScaler.
 """
+
+def engineer_features(X):
+    """
+    Creates derived features from base network traffic features.
+    These features help the model better distinguish attack patterns.
+    
+    Args:
+        X: DataFrame with base features
+        
+    Returns:
+        DataFrame with base + engineered features
+    """
+    X = X.copy()
+    
+    # Rate-based features (attacks often have unusual rates)
+    X['Packet_Rate'] = X['Total Fwd Packets'] / (X['Flow Duration'] + 1)
+    X['Bytes_Per_Packet'] = X['Fwd Packets Length Total'] / (X['Total Fwd Packets'] + 1)
+    X['IAT_To_Duration_Ratio'] = X['Flow IAT Mean'] / (X['Flow Duration'] + 1)
+    
+    # Flag-based features (attacks have unusual flag patterns)
+    total_flags = X['FIN Flag Count'] + X['SYN Flag Count'] + X['RST Flag Count']
+    X['Flag_Density'] = total_flags / (X['Total Fwd Packets'] + 1)
+    X['SYN_Ratio'] = X['SYN Flag Count'] / (total_flags + 1)
+    X['RST_Ratio'] = X['RST Flag Count'] / (total_flags + 1)
+    
+    # Port-based features
+    common_ports = [80, 443, 22, 21, 23]
+    X['Is_Common_Port'] = X['Dst Port'].isin(common_ports).astype(np.float32)
+    
+    # Port range category
+    X['Port_Category'] = X['Dst Port'].apply(lambda p: 
+        0 if p <= 1023 else (1 if p <= 49151 else 2)
+    ).astype(np.float32)
+    
+    # Clean any NaN/Inf created during feature engineering
+    X = X.replace([np.inf, -np.inf], np.nan)
+    X = X.fillna(0)
+    
+    print(f"Added {8} engineered features:")
+    print("  - Packet_Rate, Bytes_Per_Packet, IAT_To_Duration_Ratio")
+    print("  - Flag_Density, SYN_Ratio, RST_Ratio")
+    print("  - Is_Common_Port, Port_Category")
+    
+    return X
+
 
 def preprocess(df):
     """
@@ -160,7 +205,12 @@ def preprocess(df):
         X = X.fillna(0)
         
         print(f"Cleaned NaN and Infinity values.")
-        print(f"Final X shape: {X.shape}")
+        
+        # --- 2.7 Feature Engineering ---
+        print("\n--- Engineering Additional Features ---")
+        X = engineer_features(X)
+        
+        print(f"Final X shape after feature engineering: {X.shape}")
         
         # --- 2.5 Filter Rare Classes ---
         # Remove classes with fewer than 6 samples to allow for SMOTE (k_neighbors=5) if we were using it
@@ -202,9 +252,9 @@ def preprocess(df):
         X_train_scaled = scaler.fit_transform(X_train)
         X_test_scaled = scaler.transform(X_test)
         
-        # Convert back to DataFrame to keep column names
-        X_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns)
-        X_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns)
+        # Convert back to DataFrame to keep column names (Force float32)
+        X_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns, dtype=np.float32)
+        X_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns, dtype=np.float32)
         
         # --- 5. Apply SMOTE ---
         # We will use class weights in XGBoost instead.
