@@ -47,7 +47,7 @@ def stratified_sample_with_min(df, frac=0.1, min_samples=100, random_state=42):
     
     result = pd.concat(sampled_dfs, ignore_index=True)
     print(f"Stratified sampling: {len(df)} -> {len(result)} samples")
-    print(f"Class distribution after sampling:")
+    print("Class distribution after sampling:")
     print(result['Label'].value_counts())
     return result
 

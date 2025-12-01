@@ -3,7 +3,6 @@ import numpy as np
 import sys
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from imblearn.over_sampling import SMOTE
 
 # Import the load function from load_dataset.py
 try:
@@ -204,7 +203,7 @@ def preprocess(df):
         # Fill all NaN values with 0
         X = X.fillna(0)
         
-        print(f"Cleaned NaN and Infinity values.")
+        print("Cleaned NaN and Infinity values.")
         
         # --- 2.7 Feature Engineering ---
         print("\n--- Engineering Additional Features ---")

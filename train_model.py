@@ -2,11 +2,10 @@ import sys
 import joblib
 import numpy as np
 from xgboost import XGBClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_sample_weight
 from imblearn.over_sampling import SMOTE
-import pandas as pd
 import time
 import gc
 

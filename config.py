@@ -3,7 +3,7 @@ IDS Control Panel - Configuration Constants
 Centralizes magic numbers and configuration values for easier maintenance
 """
 
-from typing import Dict, Tuple
+from typing import Dict
 
 # ==================== ML MODEL PATHS ====================
 MODEL_PATH = 'xgb_model.joblib'
