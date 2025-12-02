@@ -20,43 +20,53 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Data Preprocessing and Feature Engineering}{2}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}1}Feature Selection}{2}{subsubsection.3.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}2}Feature Engineering}{2}{subsubsection.3.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Top 10 features ranked by XGBoost importance (Gain). Engineered features like `Packet\_Rate` and `Flag\_Density` show significant predictive power.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:feature_importance}{{1}{2}{Top 10 features ranked by XGBoost importance (Gain). Engineered features like `Packet\_Rate` and `Flag\_Density` show significant predictive power}{figure.1}{}}
 \citation{chawla2002smote}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}3}Label Mapping and Encoding}{3}{subsubsection.3.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}4}Normalization}{3}{subsubsection.3.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Class Balancing Strategy}{3}{subsection.3.4}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Dataset Statistics}}{3}{table.1}\protected@file@percent }
 \newlabel{tab:dataset_stats}{{I}{3}{Dataset Statistics}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Class distribution before and after the two-phase balancing strategy. Note the logarithmic scale on the Y-axis. The training set achieves near-perfect balance for attack classes.}}{3}{figure.2}\protected@file@percent }
+\newlabel{fig:class_distribution}{{2}{3}{Class distribution before and after the two-phase balancing strategy. Note the logarithmic scale on the Y-axis. The training set achieves near-perfect balance for attack classes}{figure.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}Model Configuration and Mathematical Formulation}{3}{subsection.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-F}}Training Procedure}{3}{subsection.3.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Training and Inference Performance}}{3}{table.2}\protected@file@percent }
-\newlabel{tab:performance}{{II}{3}{Training and Inference Performance}{table.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-G}}The ``Bridge'': Interactive Interpretability}{3}{subsection.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-F}}Training Procedure}{4}{subsection.3.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Training and Inference Performance}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:performance}{{II}{4}{Training and Inference Performance}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The BridgeIDS Interactive Dashboard ("Cockpit"). Analysts can adjust feature values using logarithmic sliders and observe real-time prediction probabilities.}}{4}{figure.3}\protected@file@percent }
+\newlabel{fig:dashboard_main}{{3}{4}{The BridgeIDS Interactive Dashboard ("Cockpit"). Analysts can adjust feature values using logarithmic sliders and observe real-time prediction probabilities}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-G}}The ``Bridge'': Interactive Interpretability}{4}{subsection.3.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-G}1}Statistical Context: Z-Score Analysis}{4}{subsubsection.3.7.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-G}2}Mathematical Basis: SHAP Values}{4}{subsubsection.3.7.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-G}3}Algorithm: Real-Time Sensitivity Analysis}{4}{subsubsection.3.7.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-G}4}Counterfactual Explanations (``Safety Prescriptions'')}{4}{subsubsection.3.7.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Evaluation}{4}{section.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Performance Metrics}{4}{subsection.4.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Per-Class Performance}}{4}{table.3}\protected@file@percent }
-\newlabel{tab:class_performance}{{III}{4}{Per-Class Performance}{table.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Qualitative Evaluation: Case Studies}{4}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Per-Class Performance}}{5}{table.3}\protected@file@percent }
+\newlabel{tab:class_performance}{{III}{5}{Per-Class Performance}{table.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Confusion Matrix (Normalized by True Class). The model achieves near-perfect separation for most classes, with 100\% recall for all attack types.}}{5}{figure.4}\protected@file@percent }
+\newlabel{fig:confusion_matrix}{{4}{5}{Confusion Matrix (Normalized by True Class). The model achieves near-perfect separation for most classes, with 100\% recall for all attack types}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Qualitative Evaluation: Case Studies}{5}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Interactive Feature Analysis. The system provides "What-If" sensitivity analysis, showing how changing a feature (e.g., reducing Flow Duration) would affect the prediction confidence.}}{5}{figure.5}\protected@file@percent }
+\newlabel{fig:dashboard_analysis}{{5}{5}{Interactive Feature Analysis. The system provides "What-If" sensitivity analysis, showing how changing a feature (e.g., reducing Flow Duration) would affect the prediction confidence}{figure.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Discussion}{5}{subsection.4.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}1}Performance Analysis}{5}{subsubsection.4.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}2}Web Attack Detection Challenge}{5}{subsubsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}3}DoS vs DDoS Distinction}{5}{subsubsection.4.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}4}Training Sample Size Trade-offs}{5}{subsubsection.4.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}5}Practical Deployment Considerations}{5}{subsubsection.4.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}6}Limitations}{5}{subsubsection.4.3.6}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{sharafaldin2018toward}{1}
 \bibcite{sarhan2020netflow}{2}
 \bibcite{chen2016xgboost}{3}
 \bibcite{ignatov2019interpretability}{4}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}3}DoS vs DDoS Distinction}{6}{subsubsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}4}Training Sample Size Trade-offs}{6}{subsubsection.4.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}5}Practical Deployment Considerations}{6}{subsubsection.4.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}6}Limitations}{6}{subsubsection.4.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion and Future Work}{6}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{6}{section*.1}\protected@file@percent }
 \bibcite{lundberg2017unified}{5}
 \bibcite{molnar2020interpretable}{6}
 \bibcite{ribeiro2016should}{7}
 \bibcite{chawla2002smote}{8}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion and Future Work}{6}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{6}{section*.1}\protected@file@percent }
-\gdef \@abspage@last{6}
+\gdef \@abspage@last{7}

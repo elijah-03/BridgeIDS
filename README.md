@@ -24,8 +24,9 @@ A comprehensive research report detailing the methodology, system design, and ev
 
 ### Interactive Control Panel
 -   **Logarithmic Sliders**: Handle the wide dynamic range of network features (0 to 120M+).
--   **Attack Presets**: Pre-configured buttons to simulate common attacks (DoS GoldenEye, Brute Force SSH, etc.).
+-   **Attack Presets**: Pre-configured buttons to simulate common attacks (DoS GoldenEye, Brute Force SSH, etc.) with high-confidence configurations.
 -   **Real-time Visualization**: Dynamic probability charts and confidence gauges.
+-   **Enhanced Tooltips**: Comprehensive explanations for all controls and presets, ensuring clarity for users.
 
 ## Installation
 
@@ -60,7 +61,19 @@ A comprehensive research report detailing the methodology, system design, and ev
     ```
     Runs a batch evaluation on the dataset to generate performance metrics.
 
-3.  **Run the Web Interface**:
+3.  **Evaluate Rule-Based System**:
+    ```bash
+    python evaluate_rules.py
+    ```
+    Evaluates the surrogate model's rule-based logic against the main XGBoost model to ensure interpretability alignment.
+
+4.  **Generate Report Visuals**:
+    ```bash
+    python generate_report_visuals.py
+    ```
+    Generates static plots (confusion matrices, feature importance) for the research report.
+
+5.  **Run the Web Interface**:
     ```bash
     flask run
     ```
@@ -69,7 +82,7 @@ A comprehensive research report detailing the methodology, system design, and ev
     python app.py
     ```
 
-4.  **Access the Dashboard**:
+6.  **Access the Dashboard**:
     Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ## File Structure
@@ -77,12 +90,15 @@ A comprehensive research report detailing the methodology, system design, and ev
 -   `app.py`: Main Flask application backend. Handles predictions and interpretability logic.
 -   `train_model.py`: Script to train the XGBoost model and save artifacts.
 -   `evaluate_model.py`: Script for batch evaluation of the model.
+-   `evaluate_rules.py`: Script to evaluate the rule-based surrogate system.
+-   `generate_report_visuals.py`: Script to generate plots for the report.
 -   `preprocess.py`: Data cleaning, feature selection, and preprocessing logic.
 -   `load_dataset.py`: Utility to load and sample the CSE-CIC-IDS2018 dataset.
 -   `static/`: CSS styles and JavaScript logic for the frontend.
 -   `templates/`: HTML templates for the web interface.
 -   `docs/`: Documentation and research reports.
     -   `BridgeIDS_Report.md`: Full project report.
+    -   `Latex/`: LaTeX source code and figures for the PDF report.
 -   `*.joblib`: Serialized model and preprocessing artifacts.
 
 ## Dataset

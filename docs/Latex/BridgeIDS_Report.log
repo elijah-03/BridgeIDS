@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.2)  1 DEC 2025 16:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.2)  1 DEC 2025 20:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -517,119 +517,147 @@ Underfull \hbox (badness 1960) in paragraph at lines 116--117
 en
  []
 
+<figures/feature_importance.png, id=164, 722.7pt x 433.62pt>
+File: figures/feature_importance.png Graphic file (type png)
+<use figures/feature_importance.png>
+Package pdftex.def Info: figures/feature_importance.png  used on input line 140
+.
+(pdftex.def)             Requested size: 252.0pt x 151.20026pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--142
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 []\OT1/pcr/m/n/10 Packet_Rate = Total_Fwd_Packets /
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 142--143
+[2 <./figures/feature_importance.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 []\OT1/pcr/m/n/10 Bytes_Per_Packet =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--143
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 \OT1/pcr/m/n/10 Fwd_Packets_Length_Total /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 143--144
+Underfull \hbox (badness 10000) in paragraph at lines 149--150
 []\OT1/pcr/m/n/10 IAT_To_Duration_Ratio = Flow_IAT_Mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
 []\OT1/pcr/m/n/10 Flag_Density = (FIN + SYN + RST) /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 149--150
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
 []\OT1/pcr/m/n/10 SYN_Ratio = SYN_Count / (Total_Flags +
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 150--151
+Underfull \hbox (badness 10000) in paragraph at lines 156--157
 []\OT1/pcr/m/n/10 RST_Ratio = RST_Count / (Total_Flags +
  []
 
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 172--173
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
 []\OT1/ptm/m/n/10 Label en-cod-ing is per-formed via
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--173
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
 \OT1/pcr/m/n/10 sklearn.preprocessing.LabelEncoder \OT1/ptm/m/n/10 for
  []
 
 
-Underfull \hbox (badness 1748) in paragraph at lines 184--185
+Underfull \hbox (badness 1748) in paragraph at lines 190--191
 []\OT1/ptm/m/n/10 Network traf-fic data ex-hibits ex-treme im-bal-ance (Be-
  []
 
 
-Overfull \hbox (32.36887pt too wide) in paragraph at lines 197--211
+Overfull \hbox (32.36887pt too wide) in paragraph at lines 203--217
  [][] 
  []
 
-
-Overfull \hbox (19.20795pt too wide) in paragraph at lines 247--260
+<figures/class_distribution.png, id=181, 722.7pt x 433.62pt>
+File: figures/class_distribution.png Graphic file (type png)
+<use figures/class_distribution.png>
+Package pdftex.def Info: figures/class_distribution.png  used on input line 220
+.
+(pdftex.def)             Requested size: 252.0pt x 151.20026pt.
+[3 <./figures/class_distribution.png>]
+Overfull \hbox (19.20795pt too wide) in paragraph at lines 259--272
  [][] 
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 289--290
+<figures/dashboard_main.png, id=196, 1927.2pt x 956.57375pt>
+File: figures/dashboard_main.png Graphic file (type png)
+<use figures/dashboard_main.png>
+Package pdftex.def Info: figures/dashboard_main.png  used on input line 275.
+(pdftex.def)             Requested size: 252.0pt x 125.07416pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 []\OT1/ptm/b/n/10 Inference\OT1/ptm/m/n/10 : The XG-Boost model re-evaluates
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 289--290
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 \OT1/ptm/m/n/10 the prob-a-bil-ity: $\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cm
 m/m/it/10 Attack\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 ) =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 290--291
+Underfull \hbox (badness 10000) in paragraph at lines 308--309
 []\OT1/ptm/b/n/10 Delta Cal-cu-la-tion\OT1/ptm/m/n/10 : The sys-tem com-putes t
 he
  []
 
 
-Underfull \hbox (badness 2529) in paragraph at lines 290--291
+Underfull \hbox (badness 2529) in paragraph at lines 308--309
 \OT1/ptm/m/n/10 shift in con-fi-dence: $\OT1/cmr/m/n/10 ^^A\OML/cmm/m/it/10 P \
 OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 Attack\OMS
 /cmsy/m/n/10 j\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
  []
 
 
-Overfull \hbox (14.9936pt too wide) in paragraph at lines 309--321
+Overfull \hbox (14.9936pt too wide) in paragraph at lines 327--339
  [][] 
  []
 
-
-Underfull \hbox (badness 1502) in paragraph at lines 325--326
+<figures/confusion_matrix.png, id=197, 578.16pt x 433.62pt>
+File: figures/confusion_matrix.png Graphic file (type png)
+<use figures/confusion_matrix.png>
+Package pdftex.def Info: figures/confusion_matrix.png  used on input line 342.
+(pdftex.def)             Requested size: 252.0pt x 189.00032pt.
+[4 <./figures/dashboard_main.png>]
+Underfull \hbox (badness 1502) in paragraph at lines 349--350
 []\OT1/ptm/b/n/10 Confusion Ma-trix\OT1/ptm/m/n/10 : The con-fu-sion ma-trix re
 -veals the
  []
 
-[4]
-Underfull \hbox (badness 3803) in paragraph at lines 372--373
+<figures/dashboard_analysis.png, id=215, 1927.2pt x 956.57375pt>
+File: figures/dashboard_analysis.png Graphic file (type png)
+<use figures/dashboard_analysis.png>
+Package pdftex.def Info: figures/dashboard_analysis.png  used on input line 360
+.
+(pdftex.def)             Requested size: 252.0pt x 125.07416pt.
+[5 <./figures/confusion_matrix.png> <./figures/dashboard_analysis.png>]
+Underfull \hbox (badness 3803) in paragraph at lines 402--403
 []\OT1/ptm/m/n/10 Marginal Ac-cu-racy Gains: Po-ten-tially 99.96% $\OMS/cmsy/m/
 n/10 !$
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 402--403
+Underfull \hbox (badness 4673) in paragraph at lines 432--433
 []\OT1/ptm/b/n/10 Single Dataset\OT1/ptm/m/n/10 : Eval-u-a-tion lim-ited to CSE
 -CIC-
  []
 
 
-Underfull \hbox (badness 1675) in paragraph at lines 402--403
+Underfull \hbox (badness 1675) in paragraph at lines 432--433
 \OT1/ptm/m/n/10 IDS2018; gen-er-al-iza-tion to other datasets (UNSW-
  []
 
-[5] (./BridgeIDS_Report.bbl)
+(./BridgeIDS_Report.bbl [6])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -641,7 +669,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6
+[7
 
 ] (./BridgeIDS_Report.aux)
  ***********
@@ -652,13 +680,13 @@ Package rerunfilecheck Info: File `BridgeIDS_Report.out' has not changed.
 (rerunfilecheck)             Checksum: C78B7CB855DC4A457964609FDE917E50;6664.
  ) 
 Here is how much of TeX's memory you used:
- 11454 strings out of 474222
- 177354 string characters out of 5748734
+ 11502 strings out of 474222
+ 178818 string characters out of 5748734
  1946975 words of memory out of 5000000
- 33468 multiletter control sequences out of 15000+600000
+ 33510 multiletter control sequences out of 15000+600000
  597797 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,1227b,543s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,1227b,587s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texli
@@ -672,10 +700,10 @@ sfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr
 are/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on BridgeIDS_Report.pdf (6 pages, 205429 bytes).
+Output written on BridgeIDS_Report.pdf (7 pages, 1159481 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
- 275 compressed objects within 3 object streams
- 85 named destinations out of 1000 (max. 500000)
- 273 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 287 compressed objects within 3 object streams
+ 91 named destinations out of 1000 (max. 500000)
+ 298 words of extra memory for PDF output out of 10000 (max. 10000000)
 

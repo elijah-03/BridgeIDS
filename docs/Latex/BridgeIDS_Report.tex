@@ -136,6 +136,12 @@ From the 80+ features in the CSE-CIC-IDS2018 dataset, we selected \textbf{12 cor
 \subsubsection{Feature Engineering}
 To enhance attack detection, we derive \textbf{8 additional features} from the base set:
 
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{figures/feature_importance.png}}
+\caption{Top 10 features ranked by XGBoost importance (Gain). Engineered features like `Packet\_Rate` and `Flag\_Density` show significant predictive power.}
+\label{fig:feature_importance}
+\end{figure}
+
 \textbf{Rate-Based Features} (attacks often exhibit abnormal rates):
 \begin{itemize}
     \item \texttt{Packet\_Rate = Total\_Fwd\_Packets / (Flow\_Duration + 1)}
@@ -210,6 +216,12 @@ Bot/Infiltr. & 7,050 & 1,058 & 100,000 & 80K/20K \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{figures/class_distribution.png}}
+\caption{Class distribution before and after the two-phase balancing strategy. Note the logarithmic scale on the Y-axis. The training set achieves near-perfect balance for attack classes.}
+\label{fig:class_distribution}
+\end{figure}
+
 \subsection{Model Configuration and Mathematical Formulation}
 We utilized the \textbf{XGBoost} (Extreme Gradient Boosting) classifier, which optimizes a regularized learning objective:
 
@@ -258,6 +270,12 @@ Throughput & $\sim$23,800 flows/sec & Batch processing \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{figures/dashboard_main.png}}
+\caption{The BridgeIDS Interactive Dashboard ("Cockpit"). Analysts can adjust feature values using logarithmic sliders and observe real-time prediction probabilities.}
+\label{fig:dashboard_main}
+\end{figure}
 
 \subsection{The ``Bridge'': Interactive Interpretability}
 To bridge the gap between the model and the analyst, we implemented a multi-layered interpretability module that combines statistical context, local feature attribution, and interactive counterfactual analysis.
@@ -320,6 +338,12 @@ Web Attack & 9.03\% & 100\% & 16.56\% & 53 & 99.98\% \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{figures/confusion_matrix.png}}
+\caption{Confusion Matrix (Normalized by True Class). The model achieves near-perfect separation for most classes, with 100\% recall for all attack types.}
+\label{fig:confusion_matrix}
+\end{figure}
+
 \textbf{Discussion}: The results demonstrate exceptional performance across all major attack categories. The model achieves near-perfect accuracy (99.96\%) with high confidence scores (>99\%) across 12.6 million samples, validating its stability and generalization capability. Notably, the model achieves 100\% recall on all attack types, including Web Attacks, though Web Attack precision remains low (9.03\%) due to the extremely limited training samples (153 samples). The high recall ensures no attacks are missed, while the low precision indicates some benign traffic is misclassified as Web Attacks---an acceptable trade-off given the severe data scarcity for this class.
 
 \textbf{Confusion Matrix}: The confusion matrix reveals the model's classification patterns across all 6 classes. Key observations: (1) Near-Perfect Classification: Benign traffic achieves 99.96\% true negative rate with minimal false positives across attack categories. (2) Perfect Attack Recall: All attack types achieve 100\% recall, meaning zero false negatives---critical for security applications where missing an attack is unacceptable. (3) Brute Force Excellence: Achieves 99.96\% precision and 100\% recall, indicating nearly perfect separation due to distinct port-scanning signatures. (4) DDoS/DoS Performance: Both achieve >99.98\% F1-scores with 100\% recall and near-perfect precision. (5) Bot Detection: Maintains 99.90\% recall with 90.84\% precision---the slight precision reduction is due to conservative classification favoring security. (6) Web Attack Trade-off: Achieves 100\% recall but only 9.03\% precision due to extreme class imbalance (53 samples).
@@ -331,6 +355,12 @@ Using the interactive tool, we observed that for a ``DoS GoldenEye'' attack, the
 
 \textbf{Case Study 2: Web Attack Detection}
 Web Attacks (XSS/SQLi) are often subtle. The tool highlighted that \texttt{Dst Port 80} combined with specific \texttt{Fwd Pkt Len} patterns were strong indicators. Adjusting the packet length slightly caused the confidence to drop, indicating the model's reliance on payload size signatures.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{figures/dashboard_analysis.png}}
+\caption{Interactive Feature Analysis. The system provides "What-If" sensitivity analysis, showing how changing a feature (e.g., reducing Flow Duration) would affect the prediction confidence.}
+\label{fig:dashboard_analysis}
+\end{figure}
 
 \subsection{Discussion}
 
