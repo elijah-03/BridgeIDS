@@ -4,7 +4,7 @@ A web-based interface for an XGBoost-based Intrusion Detection System (IDS) trai
 
 ## Research Report
 A comprehensive research report detailing the methodology, system design, and evaluation results is available here:
-**[Read the Full Report](docs/BridgeIDS_Report.md)**
+**[Read the Full Report](docs/Latex/BridgeIDS_Report.pdf)**
 
 ## Test Server
 -   https://interp-ml-ids.coryandcody.digital/
