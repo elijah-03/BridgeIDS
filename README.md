@@ -111,4 +111,4 @@ A comprehensive research report detailing the methodology, system design, and ev
 
 ## Dataset
 
-This project uses the **CSE-CIC-IDS2018** dataset. The `CSECICIDS2018_improved` directory should contain the CSV files. The loader handles sampling and concatenation automatically.
+This project uses the **Improved CSE-CIC-IDS2018** dataset. The `CSECICIDS2018_improved` directory should contain the CSV files. The loader handles sampling and concatenation automatically. The dataset can be download from **[Here](https://intrusion-detection.distrinet-research.be/CNS2022/Dataset_Download.html)**
